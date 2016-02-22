@@ -216,6 +216,7 @@ def _load_ips(suppress_exceptions=True):
     try:
         # first priority, use netifaces
         try:
+            print('a')
             return _load_ips_netifaces()
         except ImportError:
             pass
@@ -224,21 +225,24 @@ def _load_ips(suppress_exceptions=True):
         
         if os.name == 'nt':
             try:
+                print('b')
                 return _load_ips_ipconfig()
             except (IOError, NoIPAddresses):
                 pass
         else:
             try:
+                print('c')
                 return _load_ips_ip()
             except (IOError, OSError, NoIPAddresses):
                 pass
             try:
+                print('d')
                 return _load_ips_ifconfig()
             except (IOError, OSError, NoIPAddresses):
                 pass
         
         # lowest priority, use gethostbyname
-        
+        print('e')
         return _load_ips_gethostbyname()
     except Exception as e:
         if not suppress_exceptions:
